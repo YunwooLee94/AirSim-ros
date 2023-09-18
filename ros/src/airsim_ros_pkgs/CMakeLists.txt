@@ -42,6 +42,7 @@ find_package(catkin REQUIRED COMPONENTS
   tf2_ros
   tf2_sensor_msgs
   tf2_geometry_msgs
+        tf_conversions
 )
 
 add_message_files(
@@ -104,6 +105,11 @@ add_library(pd_position_controller_simple_topic src/pd_position_controller_simpl
 add_dependencies(pd_position_controller_simple_topic ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(pd_position_controller_simple_topic ${catkin_EXPORTED_TARGETS})
 
+add_library(keyboard_operator src/keyboard_operator.cpp)
+add_dependencies(keyboard_operator ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(keyboard_operator ${catkin_EXPORTED_TARGETS})
+
+
 add_library(airsim_ros src/airsim_ros_wrapper.cpp)
 add_dependencies(airsim_ros ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(airsim_ros ${catkin_LIBRARIES} ${OpenCV_LIBS} yaml-cpp AirLib airsim_settings_parser)
@@ -116,6 +122,9 @@ target_link_libraries(pd_position_controller_simple_node pd_position_controller_
 
 add_executable(pd_position_controller_simple_topic_node src/pd_position_controller_simple_topic_node.cpp)
 target_link_libraries(pd_position_controller_simple_topic_node pd_position_controller_simple_topic airsim_ros ${catkin_LIBRARIES} AirLib)
+
+add_executable(keyboard_operator_node src/keyboard_operator_node.cpp)
+target_link_libraries(keyboard_operator_node keyboard_operator airsim_ros ${catkin_LIBRARIES} AirLib)
 
 install(TARGETS
     #list of nodes
