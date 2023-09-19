@@ -112,7 +112,6 @@ void AirsimROSWrapper::initialize_ros()
     std::cout << std::endl;
     object_name_set = object_name_set_temp;
 
-
     create_ros_pubs_from_settings_json();
     airsim_control_update_timer_ = nh_private_.createTimer(ros::Duration(update_airsim_control_every_n_sec), &AirsimROSWrapper::drone_state_timer_cb, this);
 }
@@ -121,9 +120,9 @@ void AirsimROSWrapper::initialize_ros()
 void AirsimROSWrapper::create_ros_pubs_from_settings_json()
 {
     // subscribe to control commands on global nodehandle
-    gimbal_angle_quat_cmd_sub_ = nh_private_.subscribe("gimbal_angle_quat_cmd", 50, &AirsimROSWrapper::gimbal_angle_quat_cmd_cb, this);
-    gimbal_angle_euler_cmd_sub_ = nh_private_.subscribe("gimbal_angle_euler_cmd", 50, &AirsimROSWrapper::gimbal_angle_euler_cmd_cb, this);
-    origin_geo_point_pub_ = nh_private_.advertise<airsim_ros_pkgs::GPSYaw>("origin_geo_point", 10);
+    gimbal_angle_quat_cmd_sub_ = nh_private_.subscribe("gimbal_angle_quat_cmd", 1, &AirsimROSWrapper::gimbal_angle_quat_cmd_cb, this);
+    gimbal_angle_euler_cmd_sub_ = nh_private_.subscribe("gimbal_angle_euler_cmd", 1, &AirsimROSWrapper::gimbal_angle_euler_cmd_cb, this);
+    origin_geo_point_pub_ = nh_private_.advertise<airsim_ros_pkgs::GPSYaw>("origin_geo_point", 1);
 
     for (auto str: object_name_set){
         std::string topic = str + "_pose";
@@ -745,8 +744,8 @@ sensor_msgs::PointCloud2 AirsimROSWrapper::get_lidar_msg_from_airsim(const msr::
 {
     sensor_msgs::PointCloud2 lidar_msg;
     lidar_msg.header.stamp = ros::Time::now();
-    lidar_msg.header.frame_id = vehicle_name + "/" + sensor_name;
-
+//    lidar_msg.header.frame_id = vehicle_name + "/" + sensor_name;
+    lidar_msg.header.frame_id = vehicle_name; // (Yunwoo)
     if (lidar_data.point_cloud.size() > 3) {
         lidar_msg.height = 1;
         lidar_msg.width = lidar_data.point_cloud.size() / 3;
