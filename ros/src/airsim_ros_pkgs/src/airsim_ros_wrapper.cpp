@@ -744,8 +744,8 @@ sensor_msgs::PointCloud2 AirsimROSWrapper::get_lidar_msg_from_airsim(const msr::
 {
     sensor_msgs::PointCloud2 lidar_msg;
     lidar_msg.header.stamp = ros::Time::now();
-    lidar_msg.header.frame_id = vehicle_name + "/" + sensor_name;
-
+//    lidar_msg.header.frame_id = vehicle_name + "/" + sensor_name;
+    lidar_msg.header.frame_id = vehicle_name; // (Yunwoo)
     if (lidar_data.point_cloud.size() > 3) {
         lidar_msg.height = 1;
         lidar_msg.width = lidar_data.point_cloud.size() / 3;

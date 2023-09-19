@@ -12,7 +12,6 @@
         <param name="update_airsim_control_every_n_sec" type="double" value="0.01"/>
         <param name="update_lidar_every_n_sec" type="double" value="0.01"/>
         <rosparam param="object_name_set">[RunningActorDraw_2, RunningActorDynamicDraw_2]</rosparam>
-        <param name="do_pcl_reverse" type="bool" value="false"/>
         <param name="publish_clock" type="bool" value="false"/>
         <param name="host_ip" type="string" value="localhost"/>
 
@@ -25,11 +24,11 @@
     <node name="pid_position_node_Chaser" pkg="airsim_ros_pkgs" type="pd_position_controller_simple_topic_node"
           output="screen">
         <param name="vehicle_name" value="$(arg drone_name)"/>
-        <param name="kp_x" type="double" value="1.0"/>
-        <param name="kp_y" type="double" value="1.0"/>
+        <param name="kp_x" type="double" value="1.2"/>
+        <param name="kp_y" type="double" value="1.2"/>
         <param name="kp_z" type="double" value="0.5"/>
         <param name="kp_yaw" type="double" value="1.0"/>
-        <param name="cmd_smoothing_weight" type="double" value="0.2"/>
+        <param name="cmd_smoothing_weight" type="double" value="0.1"/>
         <param name="kd_x" type="double" value="0.6"/>
         <param name="kd_y" type="double" value="0.6"/>
         <param name="kd_z" type="double" value="0.1"/>
@@ -37,7 +36,7 @@
         <param name="max_vel_horz_abs" type="double" value="5.0"/>
         <param name="max_vel_vert_abs" type="double" value="2.0"/>
         <param name="max_yaw_rate_degree" type="double" value="10.0"/>
-        <param name="control_update_rate" type="double" value="100"/>
+        <param name="control_update_rate" type="double" value="100.0"/>
         <param name="odom_frame_id" type="string" value="$(arg airsim_world_frame)"/>
         <param name="goal_frame_id" type="string" value="world_enu"/>
     </node>

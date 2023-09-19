@@ -1,18 +1,14 @@
 <?xml version="1.0"?>
 
 <launch>
-
     <arg name="airsim_world_frame" default="world_ned"/>
     <arg name="drone_name" default="Chaser"/>
-
 
     <node name="airsim_node" pkg="airsim_ros_pkgs" type="airsim_node" output="screen">
         <param name="is_vulkan" type="bool" value="true"/>
         <param name="update_airsim_img_response_every_n_sec" type="double" value="0.05"/>
         <param name="update_airsim_control_every_n_sec" type="double" value="0.01"/>
         <param name="update_lidar_every_n_sec" type="double" value="0.01"/>
-        <rosparam param="object_name_set">[RunningActor_2]</rosparam>
-        <param name="do_pcl_reverse" type="bool" value="false"/>
         <param name="publish_clock" type="bool" value="false"/>
         <param name="host_ip" type="string" value="localhost"/>
         <param name="drone_name" value="$(arg drone_name)"/>
@@ -40,7 +36,13 @@
         <param name="odom_frame_id" type="string" value="$(arg airsim_world_frame)"/>
         <param name="goal_frame_id" type="string" value="world_enu"/>
     </node>
-    <!--node pkg="rviz" type="rviz" name="rviz" args="-d $(find airsim_ros_pkgs)/rviz/target.rviz" output="log" /-->
+
+    <node name="keyboard_operator_node" pkg="airsim_ros_pkgs" type="keyboard_operator_node" output="screen">
+        <param name="vehicle_name" value="$(arg drone_name)"/>
+        <param name="world_frame_id" value="/world_enu"/>
+    </node>
+    
+
 
 
 </launch>
